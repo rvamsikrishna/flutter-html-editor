@@ -154,7 +154,7 @@ class HtmlEditorState extends State<HtmlEditor> {
                   padding: const EdgeInsets.only(
                       left: 4.0, right: 4, bottom: 8.0, top: 4.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       if (widget.addImageBuilder != null)
                         widget.addImageBuilder(
@@ -321,13 +321,13 @@ class HtmlEditorState extends State<HtmlEditor> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
         ),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         context: context,
         builder: (BuildContext bc) {
           return StatefulBuilder(builder: (BuildContext context, setStatex) {
             return SingleChildScrollView(
                 child: Container(
-              height: 220,
+              height: 160,
               width: double.infinity,
               child: PickImage(callbackFile: (file) async {
                 String filename = p.basename(file.path);

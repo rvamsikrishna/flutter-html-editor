@@ -19,42 +19,41 @@ class PickImage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
+        padding: const EdgeInsets.only(left: 12, right: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 4),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.linked_camera,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    title: const Text('Take a picture'),
-                    contentPadding: EdgeInsets.zero,
-                    onTap: () {
-                      getImage(true);
-                      Navigator.pop(context);
-                    },
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.linked_camera,
+                    color: Theme.of(context).primaryColor,
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.image,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    title: const Text('Pick from gallery'),
-                    contentPadding: EdgeInsets.zero,
-                    onTap: () {
-                      getImage(false);
-                      Navigator.pop(context);
-                    },
+                  title: const Text('Take a picture'),
+
+                  // contentPadding: EdgeInsets.zero,
+                  onTap: () {
+                    getImage(true);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.image,
+                    color: Theme.of(context).primaryColor,
                   ),
-                ],
-              ),
+                  title: const Text('Pick from gallery'),
+                  // contentPadding: EdgeInsets.zero,
+                  onTap: () {
+                    getImage(false);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
           ],
         ),
