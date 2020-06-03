@@ -27,6 +27,7 @@ class HtmlEditor extends StatefulWidget {
   final String widthImage;
   final bool showBottomToolbar;
   final String hint;
+  final AddImageButtonBuilder addImageBuilder;
 
   HtmlEditor(
       {Key key,
@@ -36,7 +37,8 @@ class HtmlEditor extends StatefulWidget {
       this.useBottomSheet = true,
       this.widthImage = "100%",
       this.showBottomToolbar = true,
-      this.hint})
+      this.hint,
+      this.addImageBuilder})
       : super(key: key);
 
   @override
@@ -150,37 +152,41 @@ class HtmlEditorState extends State<HtmlEditor> {
           widget.showBottomToolbar
               ? Padding(
                   padding: const EdgeInsets.only(
-                      left: 4.0, right: 4, bottom: 8, top: 2),
+                      left: 4.0, right: 4, bottom: 8.0, top: 4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      widgetIcon(Icons.image, "Image", onKlik: () {
-                        widget.useBottomSheet
-                            ? bottomSheetPickImage(context)
-                            : dialogPickImage(context);
-                      }),
-                      widgetIcon(Icons.content_copy, "Copy", onKlik: () async {
-                        String data = await getText();
-                        Clipboard.setData(new ClipboardData(text: data));
-                      }),
-                      widgetIcon(Icons.content_paste, "Paste",
-                          onKlik: () async {
-                        ClipboardData data =
-                            await Clipboard.getData(Clipboard.kTextPlain);
+                      if (widget.addImageBuilder != null)
+                        widget.addImageBuilder(
+                            () => bottomSheetPickImage(context))
+                      else
+                        widgetIcon(Icons.image, "Image", onKlik: () {
+                          widget.useBottomSheet
+                              ? bottomSheetPickImage(context)
+                              : dialogPickImage(context);
+                        }),
+                      // widgetIcon(Icons.content_copy, "Copy", onKlik: () async {
+                      //   String data = await getText();
+                      //   Clipboard.setData(new ClipboardData(text: data));
+                      // }),
+                      // widgetIcon(Icons.content_paste, "Paste",
+                      //     onKlik: () async {
+                      //   ClipboardData data =
+                      //       await Clipboard.getData(Clipboard.kTextPlain);
 
-                        String txtIsi = data.text
-                            .replaceAll("'", '\\"')
-                            .replaceAll('"', '\\"')
-                            .replaceAll("[", "\\[")
-                            .replaceAll("]", "\\]")
-                            .replaceAll("\n", "<br/>")
-                            .replaceAll("\n\n", "<br/>")
-                            .replaceAll("\r", " ")
-                            .replaceAll('\r\n', " ");
-                        String txt =
-                            "\$('.note-editable').append( '" + txtIsi + "');";
-                        _controller.evaluateJavascript(txt);
-                      }),
+                      //   String txtIsi = data.text
+                      //       .replaceAll("'", '\\"')
+                      //       .replaceAll('"', '\\"')
+                      //       .replaceAll("[", "\\[")
+                      //       .replaceAll("]", "\\]")
+                      //       .replaceAll("\n", "<br/>")
+                      //       .replaceAll("\n\n", "<br/>")
+                      //       .replaceAll("\r", " ")
+                      //       .replaceAll('\r\n', " ");
+                      //   String txt =
+                      //       "\$('.note-editable').append( '" + txtIsi + "');";
+                      //   _controller.evaluateJavascript(txt);
+                      // }),
                     ],
                   ),
                 )
@@ -313,15 +319,15 @@ class HtmlEditorState extends State<HtmlEditor> {
   bottomSheetPickImage(context) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey,
         context: context,
         builder: (BuildContext bc) {
           return StatefulBuilder(builder: (BuildContext context, setStatex) {
             return SingleChildScrollView(
                 child: Container(
-              height: 140,
+              height: 220,
               width: double.infinity,
               child: PickImage(callbackFile: (file) async {
                 String filename = p.basename(file.path);
@@ -338,3 +344,5 @@ class HtmlEditorState extends State<HtmlEditor> {
         });
   }
 }
+
+typedef Widget AddImageButtonBuilder(Function onClick);

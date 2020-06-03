@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
  */
 
 typedef void CallbackValue(dynamic value);
+
 class PickImage extends StatelessWidget {
   final CallbackValue callbackFile;
   final Color color;
@@ -28,61 +29,29 @@ class PickImage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    width: 80,
-                    child: FlatButton(
-                      padding: const EdgeInsets.all(10),
-                      onPressed: () {
-                        getImage(true);
-                        Navigator.pop(context);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Icon(
-                              Icons.linked_camera,
-                              color: color ?? Colors.black45,
-                              size: 44,
-                            ),
-                          ),
-                          Text(
-                            "Camera",
-                            style: TextStyle(color: color ?? Colors.black45),
-                          ),
-                        ],
-                      ),
-                      color: Colors.white,
+                  ListTile(
+                    leading: Icon(
+                      Icons.linked_camera,
+                      color: Theme.of(context).primaryColor,
                     ),
+                    title: const Text('Take a picture'),
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      getImage(true);
+                      Navigator.pop(context);
+                    },
                   ),
-                  SizedBox(
-                    width: 80,
-                    child: FlatButton(
-                      padding: const EdgeInsets.all(10),
-                      onPressed: () {
-                        getImage(false);
-                        Navigator.pop(context);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Icon(
-                              Icons.image,
-                              color: color ?? Colors.black45,
-                              size: 44,
-                            ),
-                          ),
-                          Text(
-                            "Galery",
-                            style: TextStyle(color: color ?? Colors.black45),
-                          ),
-                        ],
-                      ),
-                      color: Colors.white,
+                  ListTile(
+                    leading: Icon(
+                      Icons.image,
+                      color: Theme.of(context).primaryColor,
                     ),
+                    title: const Text('Pick from gallery'),
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      getImage(false);
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               ),
